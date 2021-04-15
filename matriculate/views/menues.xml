@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <menuitem id="menu_college"  name="Colegio de Profesionales" sequence="0" web_icon="matriculate,static/description/icon.png"/>
+                    <!-- Menú Matriculado -->
+               <menuitem action="action_res_partner_matriculate" id="menu_action_res_partner_matriculate" parent="menu_college" sequence="30"/>
+
+
+                    <!-- Menú Laboratorio
+               <menuitem action="action_res_partner_laboratory" id="menu_action_res_partner_laboratory" parent="menu_college" sequence="40"/>
+-->
+                    <!-- Menú Gestión de Cuotas
+                    <menuitem id="menu_cuotas" name="Gestión de Cuotas" parent="menu_college" sequence="45"/>
+                    <menuitem id="invoice_menu" name="Cuotas" parent="menu_cuotas" sequence="101" action="account.action_invoice_tree1"/>
+                    <menuitem name="Generar Cuotas" id="fees_wizard_menu" parent="menu_cuotas" action="fees_wizard_action" sequence="45" />
+                  <menuitem id="product_template_menu" name="Conceptos de Factura" parent="menu_cuotas" sequence="101" action="concept_action"/>
+ -->
+                    <!-- Menú Reportes
+        <menuitem name="Reportes" id="report_menu" parent="menu_college" sequence="100" />
+                    <menuitem name="Matriculados" id="matriculado_report_menu" parent="report_menu" sequence="557" />
+                          <menuitem name="Reporte por Ciudad" action="matriculado_report_contacto" id="matriculado_report_contacto_menu" parent="matriculado_report_menu" sequence="32" />
+                            <menuitem name="Reporte por Estado" action="matriculado_report" id="matriculado_report_estado_menu" parent="matriculado_report_menu" sequence="31" />
+                        <menuitem name="Laboratorios" id="laboratorio_report_menu" parent="report_menu" sequence="558" />
+                            <menuitem name="Reporte de Laboratorios" action="laboratorio_report" id="laboratorio_report_menu_city" parent="laboratorio_report_menu" sequence="33" />
+                        <menuitem name="Cuotas" id="cuotas_report_menu" parent="report_menu" sequence="559" />
+                            <menuitem name="Reporte de Deudas de Cuotas" action="fees_report" id="fees_report_menu" parent="cuotas_report_menu" sequence="34" />
+ -->
+             <!-- Menú Configuración-->
+          <menuitem id="configuracion_menu" name="Configuración" parent="menu_college" sequence="200"/>
+                    <menuitem id="matriculado_configuracion_menu" name="Matriculado" parent="configuracion_menu" sequence="800" />
+                                    <menuitem id="universidad_menu" name="Universidades" parent="matriculado_configuracion_menu" sequence="801" action="action_universidad_tree_view"/>
+                                    <menuitem id="matriculate.estudio_titulo_menu" name="Titulos" parent="matriculado_configuracion_menu" sequence="802" action="action_matriculate_estudio_titulo_tree_view"/>
+                                    <menuitem id="matriculate.idioma_menu" name="Idiomas" parent="matriculado_configuracion_menu" sequence="803" action="action_matriculate_idioma_tree_view"/>
+                                    <menuitem id="empleo_menu" name="Empleos o cargos" parent="matriculado_configuracion_menu" sequence="804" action="action_empleo_tree_view"/>
+                                    <menuitem id="profesion_menu" name="Profesiones" parent="matriculado_configuracion_menu" sequence="805" action="action_profesion_tree_view"/>
+                                    <menuitem id="caja_jubilatoria_menu" name="Cajas Jubilatorias" parent="matriculado_configuracion_menu" sequence="806" action="action_caja_jubilatoria_tree_view"/>
+                                    <menuitem id="obra_social_menu" name="Obras Sociales" parent="matriculado_configuracion_menu" sequence="807" action="action_obra_social_tree_view"/>
+                            <menuitem id="laboratorio_configuracion_menu" name="Laboratorio" parent="configuracion_menu" sequence="820" />
+                                    <!--<menuitem id="practica_menu" name="Prácticas" parent="laboratorio_configuracion_menu" sequence="821" action="action_practica_tree_view"/>
+
+                                    <menuitem id="sector_menu" name="Sectores" parent="laboratorio_configuracion_menu" sequence="822" action="action_sector_tree_view"/>
+                                    <menuitem id="instrumento_menu" name="Instrumentos" parent="laboratorio_configuracion_menu" sequence="823" action="action_instrumento_tree_view"/>
+                                    <menuitem id="marca_instrumento_menu" name="Marcas de Instrumentos" parent="laboratorio_configuracion_menu" sequence="824" action="action_marca_instrumento_tree_view"/>
+                                    <menuitem id="tipo_instrumento_menu" name="Tipo de Instrumentos" parent="laboratorio_configuracion_menu" sequence="825" action="action_tipo_instrumento_tree_view"/>
+                            <menuitem id="general_configuracion_menu" name="General" parent="configuracion_menu" sequence="840" />
+                                    <menuitem id="motivo_menu" name="Motivos de Estados" parent="general_configuracion_menu" sequence="841" action="action_motivo_tree_view"/>
+                            <menuitem id="ciudad_menu" name="Ciudades" parent="general_configuracion_menu" sequence="842" action="action_ciudad_tree_view"/>-->
+
+    </data>
+</odoo>

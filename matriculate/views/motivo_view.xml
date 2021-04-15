@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="motivo_tree_view">
+            <field name="name">matriculate.motivo.tree</field>
+            <field name="model">matriculate.motivo</field>
+            
+            <field name="arch" type="xml">
+                <tree string="Motivos" >
+                    <field name="name" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="motivo_form_view">
+            <field name="name">matriculate.motivo.form</field>
+            <field name="model">matriculate.motivo</field>          
+            <field name="arch" type="xml">
+                <form string="Motivos">  
+                    <sheet> 
+                        <group>
+                            <field name="name" />  
+                            <field name="state" />              
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_motivo_tree_view">
+            <field name="name">Motivos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">matriculate.motivo</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="motivo_tree_view" />
+        </record>
+    
+</odoo>
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="obra_social_tree_view">
+            <field name="name">matriculate.obra.social.tree</field>
+            <field name="model">matriculate.obra.social</field>
+            
+            <field name="arch" type="xml">
+                <tree string="Obra Social" >
+                    <field name="name" />
+                    <field name="prepaga"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="obra_social_form_view">
+            <field name="name">matriculate.obra.social.form</field>
+            <field name="model">matriculate.obra.social</field>          
+            <field name="arch" type="xml">
+                <form string="Obra Social">  
+                    <sheet> 
+                        <group>
+                            <field name="name" />  
+                            <field name="prepaga" string="¿Es prepaga?"/>              
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_obra_social_tree_view">
+            <field name="name">Obra Social</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">matriculate.obra.social</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="obra_social_tree_view" />
+        </record>    
+</odoo>
+

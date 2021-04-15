@@ -1,0 +1,49 @@
+<odoo>
+  <data>
+
+<!-- CARRERA TITULO -->
+
+            <record model="ir.ui.view" id="matriculate.idioma_tree_view">
+                <field name="name">matriculate.idioma.tree</field>
+                <field name="model">matriculate.idioma</field>
+                <field name="arch" type="xml">
+                    <tree string="Idiomas">
+                        <field name="name"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="matriculate.idioma_form_view">
+                <field name="name">matriculate.idioma.form</field>
+                <field name="model">matriculate.idioma</field>
+                <field name="arch" type="xml">
+                    <form string="Títulos"  version="7.0">
+                        <sheet string="Idiomas">
+                        <group class="oe_header">
+                            <field name="name" select="1"/>
+                       </group>
+                   </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="matriculate.idioma_search_view">
+                <field name="name">matriculate.idioma.search</field>
+                <field name="model">matriculate.idioma</field>
+                <field name="arch" type="xml">
+                    <search string="Idiomas" >
+                        <field name="name"/>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.actions.act_window" id="action_matriculate_idioma_tree_view">
+                <field name="name">Idiomas</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">matriculate.idioma</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="matriculate.idioma_tree_view"/>
+                <field name="search_view_id" ref="matriculate.idioma_search_view" />
+            </record>
+  </data>
+</odoo>

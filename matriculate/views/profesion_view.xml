@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="profesion_tree_view">
+            <field name="name">matriculate.profesion.tree</field>
+            <field name="model">matriculate.profesion</field>
+            
+            <field name="arch" type="xml">
+                <tree string="Profesiones" >
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="profesion_form_view">
+            <field name="name">matriculate.profesion.form</field>
+            <field name="model">matriculate.profesion</field>          
+            <field name="arch" type="xml">
+                <form string="Profesiones">  
+                    <sheet> 
+                        <group>
+                            <field name="name" />              
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_profesion_tree_view">
+            <field name="name">Profesiones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">matriculate.profesion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="profesion_tree_view" />
+        </record>    
+</odoo>
+

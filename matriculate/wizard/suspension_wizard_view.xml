@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<odoo>
+
+        <record model="ir.ui.view" id="suspension_wizard_form_view">
+            <field name="name">suspension.wizard.form</field>
+            <field name="model">suspension.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Suspender">
+                    <separator colspan="4" string="Ingrese el motivo de la suspensión" />
+                    <newline/>
+                    <field name="motivo_id" context="{'default_state' : 'suspension'}" domain="[('state','=','suspension')]" autofocus="True"/>
+                    <separator colspan="4" string="Comentarios" />
+                    <newline/>
+                    <field name="descripcion" autofocus="True"/>
+                    <footer>
+                        <button name="makeSuspension" string="Suspender" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_suspension_wizard" model="ir.actions.act_window">
+            <field name="name">Suspender</field>
+            <field name="res_model">suspension.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

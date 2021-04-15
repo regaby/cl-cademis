@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="empleo_tree_view">
+            <field name="name">matriculate.empleo.tree</field>
+            <field name="model">matriculate.empleo</field>
+            
+            <field name="arch" type="xml">
+                <tree string="Profesiones" >
+                    <field name="particular_id" />
+                    <field name="especialidad_id" />
+                    <field name="actuacion_cientifica" />
+                    <field name="actuacion_didactica" />
+                    <field name="actuacion_entidades" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="empleo_form_view">
+            <field name="name">matriculate.empleo.form</field>
+            <field name="model">matriculate.empleo</field>          
+            <field name="arch" type="xml">
+                <form string="Empleo o cargos">  
+                    <sheet> 
+                        <group>
+                            <field name="particular_id" />
+                            <field name="especialidad_id" />
+                            <field name="actuacion_cientifica" />
+                            <field name="actuacion_didactica" />
+                            <field name="actuacion_entidades" />             
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_empleo_tree_view">
+            <field name="name">Empleos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">matriculate.empleo</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="empleo_tree_view" />
+        </record>    
+</odoo>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="caja_jubilatoria_tree_view">
+            <field name="name">matriculate.caja.jubilatoria.tree</field>
+            <field name="model">matriculate.caja.jubilatoria</field>
+            
+            <field name="arch" type="xml">
+                <tree string="Caja Jubilatoria" >
+                    <field name="name" />
+                    <field name="tipo"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="caja_jubilatoria_form_view">
+            <field name="name">matriculate.caja.jubilatoria.form</field>
+            <field name="model">matriculate.caja.jubilatoria</field>          
+            <field name="arch" type="xml">
+                <form string="Caja Jubilatoria">  
+                    <sheet> 
+                        <group>
+                            <field name="name" />  
+                            <field name="tipo"/>              
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_caja_jubilatoria_tree_view">
+            <field name="name">Caja Jubilatoria</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">matriculate.caja.jubilatoria</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="caja_jubilatoria_tree_view" />
+        </record>  
+</odoo>
+

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="res_partner_action">
+            <field name="name">Partner</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_res_partner_tree">
+            <field name="name">view.res.partner.tree</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <field name="phone" position="before">
+                    <field name="vat" string="DNI/CUIT"/>
+                    <field name="city" string="Localidad"/>
+                </field>
+                <field name="email" position="after">
+                    <field name="state" string="Estado"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="personal_information">
+            <field name='name'>view.res_partner.form</field>
+            <field name="inherit_id" ref="partner_contact_personal_information_page.personal_information"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='personal_information_page']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+<!--
+        <record model="ir.ui.view" id="view_partner_latam_form">
+            <field name='name'>view.res_partner.form</field>
+            <field name="inherit_id" ref="l10n_latam_base.view_partner_latam_form"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat'][1]" position="attributes">
+                    <attribute name="placeholder">Número de CUIT</attribute>
+                </xpath>
+            </field>
+        </record>
+-->
+        <record model="ir.ui.view" id="view_res_partner_form">
+            <field name='name'>view.res_partner.form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/*" position="before">
+                    <header attrs="{'invisible':[('is_matriculado','!=',True)]}">
+                        <button name="button_alta" type="object" string="Dar Alta" class="btn btn-sm btn-default oe_highlight o_invoice_validate" states="pendiente,suspendido"/>
+                        <button name="%(action_suspension_wizard)d" class="btn btn-sm btn-default oe_highlight o_invoice_validate" type="action" string="Suspender" states="activo"/>
+                        <button name="%(action_baja_wizard)d" class="btn btn-sm btn-default oe_highlight o_invoice_validate" type="action" string="Dar Baja" states="activo,suspendido"/>
+                        <button name="print_carnet" type="object" class="btn btn-sm btn-default oe_highlight o_invoice_validate" string="Imprimir Carnet Matriculado" states="activo"/>
+                        <field name="state" widget="statusbar" tatusbar_visible="pendiente,activo,suspendido,baja"/>
+                    </header>
+                </xpath>
+                <!-- Atributos que se ocultan -->
+                <field name="function" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="city" position="attributes" >
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="city" position="after">
+                    <field name="city_id" placeholder="Ciudad" on_change="_onchange_city_id" class="o_address_city"/>
+                </field>
+                <field name="street" position="attributes">
+                    <attribute name="placeholder">Residencia Particular (Calle)</attribute>
+                </field>
+                <field name="website" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="street2" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="ref" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="lang" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="category_id" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="parent_id" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="company_type" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="title" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <xpath expr="//notebook/page[1]" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('is_matriculado','=',True)]}
+                    </attribute>
+                </xpath>
+                <page name="sales_purchases" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('is_matriculado','=',True)]}
+                    </attribute>
+                </page>
+                <page name="internal_notes" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </page>
+                <!---->
+                <field name="vat" position="after">
+                    <field name="dni" attrs="{'invisible':[('is_matriculado','!=',True)]}" placeholder="Documento Nacional de Identidad"/>
+                </field>
+                <field name="category_id" position="after">
+                    <field name="is_matriculado" string="Matriculado" invisible="1"/>
+                    <field name="matricula_number" attrs="{'invisible':['|',('state','=','pendiente'), ('is_matriculado','!=',True)],'required':[('state','!=','pendiente')]
+                            ,'readonly':[('state','==','baja')]}" readonly="0"/>
+                    <field name="matricula_date" attrs="{'invisible':[('state','=','pendiente')],'required':[('state','!=','pendiente')]
+                                ,'readonly':[('state','==','baja')]}" readonly="0"/>
+                </field>
+                <xpath expr="//notebook/page[1]" position="before">
+                    <page string="Información Personal" attrs="{'invisible':[('is_matriculado','!=',True)]}">
+                        <group>
+                            <group>
+                                <field name="birthdate_date" />
+                                <field name="age" string="Edad"/>
+                                <field name="gender" />
+                                <field name="marital" />
+                                <field name="nationality_id" />
+                            </group>
+                            <group>
+                                <field name="profesion_id" />
+                                <field name="job_street" placeholder="Residencia Profesional (Calle)"/>
+                                <field name="job_city" placeholder="Residencia Profesional (Localidad)"/>
+                                <field name="job_phone" />
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Familiares" attrs="{'invisible':[('is_matriculado','!=',True)]}">
+                        <field name="familiar_ids"  widget="one2many_list" nolabel="1">
+                            <tree string="Familiares" editable="bottom" >
+                                <field name="parentesco"/>
+                                <field name="name"/>
+                                <field name="apellido" />
+                            </tree>
+                            <form string="Familiares" >
+                                <group colspan="2" col="2">
+                                    <field name="parentesco"/>
+                                    <field name="name"/>
+                                    <field name="apellido" />
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Estudios Cursados" attrs="{'invisible':[('is_matriculado','!=',True)]}">
+                        <separator string="Estudios Universitarios" colspan="4"/>
+                        <field name="estudio_ids" nolabel="1" >
+                            <tree string="Estudios Universitarios" >
+                                <field name="universidad_id"/>
+                                <field name="titulo_id" />
+                                <field name="inicio"/>
+                                <field name="fin"/>
+                                <field name="duracion"/>
+                                <field name="estado"/>
+                            </tree>
+                            <form string="Estudios Universitarios" >
+                                <group colspan="4" col="4">
+                                    <field name="universidad_id"/>
+                                    <field name="titulo_id" domain="[('nivel', '&lt;', '8')]"/>
+                                    <field name="inicio"/>
+                                    <field name="fin"/>
+                                    <field name="duracion"/>
+                                    <field name="estado"/>
+                                </group>
+                            </form>
+                        </field>
+                        <separator string="Cursos post-universitarios y otros" colspan="4"/>
+                        <field name="curso_ids" nolabel="1" >
+                            <tree string="Cursos post-universitarios y otros" >
+                                <field name="universidad_id"/>
+                                <field name="titulo_id" />
+                                <field name="inicio"/>
+                                <field name="fin"/>
+                                <field name="duracion"/>
+                                <field name="estado"/>
+                            </tree>
+                            <form string="Cursos post-universitarios y otros" >
+                                <group colspan="4" col="4">
+                                    <field name="universidad_id"/>
+                                    <field name="titulo_id" domain="[('nivel', '&gt;', '7')]"/>
+                                    <field name="inicio"/>
+                                    <field name="fin"/>
+                                    <field name="duracion"/>
+                                    <field name="estado"/>
+                                </group>
+                            </form>
+                        </field>
+                        <separator string="Idiomas" colspan="4"/>
+                        <field name="idioma_ids" nolabel="1" widget="many2many_tags">
+                        </field>
+                    </page>
+                    <page string="Cargos o empleos" attrs="{'invisible':[('is_matriculado','!=',True)]}">
+                        <field name="empleo_ids"  nolabel="1">
+                            <tree string="Cargos o empleos" >
+                                <field name="particular_id"/>
+                                <field name="especialidad_id"/>
+                                <field name="actuacion_cientifica" />
+                                <field name="actuacion_didactica" />
+                                <field name="actuacion_entidades" />
+                            </tree>
+                            <form string="Cargos o empleos" >
+                                <group colspan="2" col="2">
+                                    <field name="particular_id"/>
+                                    <field name="especialidad_id"/>
+                                    <field name="actuacion_cientifica" />
+                                    <field name="actuacion_didactica" />
+                                    <field name="actuacion_entidades" />
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Aportes" attrs="{'invisible':[('is_matriculado','!=',True)]}">
+                        <separator string="Caja Jubilatoria" colspan="4"/>
+                        <field name="caja_jubilatoria_id" nolabel="1"/>
+
+                        <separator string="Obra Social" colspan="4"/>
+                        <field name="obra_social_id" nolabel="1"/>
+                    </page>
+                    <page string="Historial de Estados" attrs="{'invisible':[('is_matriculado','!=',True)]}">
+                        <field name="issue_lines">
+                            <tree create="false" delete="true" editable='false'>
+                                <field name="motivo_id" readonly="1"/>
+                                <field name="descripcion" readonly="1"/>
+                                <field name="date_issue" readonly="1"/>
+                                <field name="state" readonly="1"/>
+                            </tree>
+                            <form string="Historial de Estados" >
+                                <group colspan="2" col="2">
+                                    <field name="motivo_id"/>
+                                    <field name="descripcion"/>
+                                    <field name="date_issue"/>
+                                    <field name="state" />
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_res_partner_search" >
+            <field name="name">view.res.partner.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <search>
+            </search>
+            <field name="name" position="after">
+                    <field name="vat" string="CUIT/DNI"/>
+                    <field name="city" string="Localidad"/>
+                </field>
+            </field>
+        </record>
+
+
+        <!-- Action de matriculado -->
+        <record model="ir.actions.act_window" id="action_res_partner_matriculate">
+            <field name="name">Matriculados</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="view_res_partner_tree"/>
+            <field name="domain">[('is_matriculado','=','True')]</field>
+            <field name="context">{'default_is_matriculado': 'True'}</field>
+            <field name="search_view_id" ref="view_res_partner_search"/>
+            <field name="target">current</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click para añadir  un nuevo matriculado.
+                </p>
+                <p>
+                    Crea el primer matriculado...
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="contacts.action_contacts">
+            <field name="domain">[('is_matriculado','!=','True')]</field>
+        </record>
+
+
+    </data>
+</odoo>

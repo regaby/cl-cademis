@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="universidad_tree_view">
+            <field name="name">matriculate.universidad.tree</field>
+            <field name="model">matriculate.universidad</field>
+
+            <field name="arch" type="xml">
+                <tree string="Universidades" >
+                    <field name="name" />
+                    <field name="country_id" />
+                    <field name="state_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="universidad_form_view">
+            <field name="name">matriculate.universidad.form</field>
+            <field name="model">matriculate.universidad</field>
+            <field name="arch" type="xml">
+                <form string="Universidades">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="country_id"/>
+                   			<field name="state_id"/>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_universidad_tree_view">
+            <field name="name">Universidades</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">matriculate.universidad</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="universidad_tree_view" />
+        </record>
+</odoo>
