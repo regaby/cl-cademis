@@ -163,6 +163,7 @@
         'https://github.com/OCA/web.git',
         ##
         'https://github.com/ctmil/contract.git',
+        'https://github.com/ctmil/account_debt_management.git',
     ],
 
     # Docker images to be used in this deployment
