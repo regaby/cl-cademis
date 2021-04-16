@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<odoo>
+
+        <record model="ir.ui.view" id="advertencia_wizard_form_view">
+            <field name="name">advertencia.wizard.form</field>
+            <field name="model">advertencia.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Advertir">
+                    <separator colspan="4" string="Ingrese el motivo de la advertencia" />
+                    <newline/>
+                    <field name="motivo_id" context="{'default_state' : 'advertencia'}" domain="[('state','=','advertencia')]" autofocus="True"/>
+                    <separator colspan="4" string="Comentarios" />
+                    <newline/>
+                    <field name="descripcion" autofocus="True"/>
+                    <footer>
+                        <button name="makeAdvertencia" string="Advertir" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_advertencia_wizard" model="ir.actions.act_window">
+            <field name="name">Advertir</field>
+            <field name="res_model">advertencia.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

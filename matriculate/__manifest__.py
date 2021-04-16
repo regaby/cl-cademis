@@ -21,6 +21,7 @@
         'security/ir.model.access.csv',
         'wizard/suspension_wizard_view.xml',
         'wizard/baja_wizard_view.xml',
+        'wizard/advertencia_wizard_view.xml',
         'views/res_partner_view.xml',
         "views/universidad_view.xml",
         "views/estudio_titulo_view.xml",
