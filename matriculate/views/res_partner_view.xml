@@ -51,11 +51,11 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/*" position="before">
                     <header attrs="{'invisible':[('is_matriculado','!=',True)]}">
-                        <button name="button_alta" type="object" string="Dar Alta" class="btn btn-sm btn-default oe_highlight o_invoice_validate" states="pendiente,suspendido"/>
-                        <button name="%(action_suspension_wizard)d" class="btn btn-sm btn-default oe_highlight o_invoice_validate" type="action" string="Suspender" states="activo"/>
-                        <button name="%(action_baja_wizard)d" class="btn btn-sm btn-default oe_highlight o_invoice_validate" type="action" string="Dar Baja" states="activo,suspendido"/>
-                        <button name="print_carnet" type="object" class="btn btn-sm btn-default oe_highlight o_invoice_validate" string="Imprimir Carnet Matriculado" states="activo"/>
-                        <field name="state" widget="statusbar" tatusbar_visible="pendiente,activo,suspendido,baja"/>
+                        <button name="button_alta" type="object" class="btn btn-sm btn-default oe_highlight o_invoice_validate" string="Dar Alta" states="pendiente,suspendido,advertido,baja"/>
+                        <button name="%(action_suspension_wizard)d" class="btn btn-sm btn-default oe_highlight o_invoice_validate" type="action" string="Suspender" states="activo,advertido"/>
+                        <button name="%(action_advertencia_wizard)d" class="btn btn-sm btn-default oe_highlight o_invoice_validate" type="action" string="Advertir" states="activo"/>
+                        <button name="%(action_baja_wizard)d" class="btn btn-sm btn-default oe_highlight o_invoice_validate" type="action" string="Dar Baja" states="activo,suspendido,advertido"/>
+                        <field name="state" widget="statusbar" statusbar_visible="pendiente,activo,advertido,suspendido,baja"/>
                     </header>
                 </xpath>
                 <!-- Atributos que se ocultan -->

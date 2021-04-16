@@ -14,23 +14,36 @@ class Partner(models.Model):
     is_matriculado = fields.Boolean(string='Matriculado')
     matricula_number = fields.Integer(string='N° de Matrícula')
     matricula_date = fields.Date(string='Fecha de Inscripción')
-    marital = fields.Selection(string='Estado Civil', selection=[('single', 'Soltero/a'),
-                                                                 ('married', 'Casado/a'),
-                                                                 ('divorced', 'Divorciado/a'),
-                                                                 ('widower', 'Viudo/a')],
-                               default='single')
+    marital = fields.Selection(
+        string='Estado Civil',
+        selection=
+        [('single', 'Soltero/a'),
+         ('married', 'Casado/a'),
+         ('divorced', 'Divorciado/a'),
+         ('widower', 'Viudo/a')],
+        default='single'
+    )
     dni = fields.Char(string='DNI', size=8)
     # city_id = fields.Many2one('res.city', string='Ciudad')
     #datos laborales
     job_street = fields.Char()
     job_city = fields.Many2one('res.city', string='Ciudad')
     job_phone = fields.Char(string="Teléfono Profesional")
-    state = fields.Selection([('pendiente','Pendiente'),
-                             ('activo','Activo'),
-                             ('advertido','Advertido'),
-                             ('suspendido','Suspendido'),
-                             ('baja','Baja')], string='Status', default='pendiente', readonly=True )
-
+    state = fields.Selection(
+        [('pendiente','Pendiente'),
+         ('activo','Activo'),
+         ('activo_honorario','Activo Honorario'),
+         ('advertido','Advertido'),
+         ('suspendido','Suspendido Morosidad'),
+         ('suspendido_voluntario','Suspendido Voluntariamente'),
+         ('baja','Cancelado/Baja'),
+         ('fallecido','Fallecido'),
+         ('incompatibilidad','Incompatibilidad'),
+        ],
+        string='Status',
+        default='pendiente',
+        readonly=True
+    )
     #datos de estudio
     estudio_ids = fields.One2many('matriculate.estudio', 'partner_id', string='Estudios')
     curso_ids = fields.One2many('matriculate.estudio', 'partner_curso_id', string='Capacitaciones')
@@ -132,26 +145,21 @@ class Partner(models.Model):
             #Cargar la fecha del dia en la fecha de inscripcion de la matricula
             self.matricula_date = datetime.now()
         if self.state == 'suspendido':
-            self.write({'state': 'activo'})
-            self.motivo_cambio_estado_id = None
-            issue_obj = self.env['matriculate.issue']
-            issue_obj.create({
-                'partner_id': self.id,
-                'descripcion': "Cambio de estado Suspendido a Activo",
-                'motivo_id': 0,
-                'date_issue': datetime.now(),
-                'state':'activo'})
-        if self.state == 'advertido':
-            self.write({'state': 'activo'})
-            self.motivo_cambio_estado_id = None
-            issue_obj = self.env['matriculate.issue']
-            issue_obj.create({
-                'partner_id': self.id,
-                'descripcion': "Cambio de estado Advertido a Activo",
-                'motivo_id': 0,
-                'date_issue': datetime.now(),
-                'state':'activo'})
-        return {}
+            description = "Cambio de estado Suspendido a Activo"
+        elif self.state == 'advertido':
+            description = "Cambio de estado Advertido a Activo"
+        elif self.state == 'baja':
+            description = "Cambio de estado Baja a Activo"
+        self.write({'state': 'activo'})
+        self.motivo_cambio_estado_id = None
+        issue_obj = self.env['matriculate.issue']
+        issue_obj.create({
+            'partner_id': self.id,
+            'descripcion': description,
+            'motivo_id': False,
+            'date_issue': datetime.now(),
+            'state':'activo'})
+        return True
 
     def button_suspendido(self,motivo_id,descripcion,partner_id):
         self.write({'state': 'suspendido'})
