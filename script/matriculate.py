@@ -31,28 +31,39 @@ creations = 0
 updates = 0
 START_TIME = time.time()
 
+STATE = {
+    'ACTIVO': 'activo',
+    'ACTIVO HONORARIO': 'activo_honorario',
+    'CANCELADO/BAJA': 'baja',
+    'FALLECIDO': 'fallecido',
+    'INCOMPATIBILIDAD': 'incompatibilidad',
+    'SUSP. MOROSIDAD': 'suspendido',
+    'SUSP. VOLUNTARIAMENTE': 'suspendido_voluntario',
+}
+
 for line in CSV_FILE:
     cont += 1
     matricula = line[0]
     name = line[1]
     state = line[4]
 
-    args = [('matricula_number', '=', name)]
+    args = [('matricula_number', '=', matricula)]
 
     partner_id = SOCK.execute(DB, UID, PASS, MODEL_NAME, 'search', args)
-    contract_type = {
+    partner_val = {
         'name': name,
         'matricula_number': matricula,
-        'state': state,
+        'state': STATE[state],
+        'is_matriculado': True,
     }
     sys.stdout.write("\rLoading Concept: #%s" % cont)
     sys.stdout.flush()
     if not partner_id:
-        reg_id = SOCK.execute(DB, UID, PASS, MODEL_NAME, 'create', contract_type)
+        reg_id = SOCK.execute(DB, UID, PASS, MODEL_NAME, 'create', partner_val)
 #         # print("Creating Concept #%s" % cont)
         creations += 1
     else:
-        reg_id = SOCK.execute(DB, UID, PASS, MODEL_NAME, 'write', partner_id, contract_type)
+        reg_id = SOCK.execute(DB, UID, PASS, MODEL_NAME, 'write', partner_id, partner_val)
         # print("Updating Concept #%s" % cont)
         updates += 1
 #
