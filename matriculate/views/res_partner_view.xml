@@ -123,8 +123,10 @@
                     <field name="is_matriculado" string="Matriculado" invisible="1"/>
                     <field name="matricula_number" attrs="{'invisible':['|',('state','=','pendiente'), ('is_matriculado','!=',True)],'required':[('state','!=','pendiente')]
                             ,'readonly':[('state','==','baja')]}" readonly="0"/>
-                    <field name="matricula_date" attrs="{'invisible':[('state','=','pendiente')],'required':[('state','!=','pendiente')]
+                    <!--<field name="matricula_date" attrs="{'invisible':[('state','=','pendiente')],'required':[('state','!=','pendiente')]
                                 ,'readonly':[('state','==','baja')]}" readonly="0"/>
+                            -->
+                    <field name="matricula_date" attrs="{'invisible':[('state','=','pendiente')],'readonly':[('state','==','baja')]}" readonly="0"/>
                 </field>
                 <xpath expr="//notebook/page[1]" position="before">
                     <page string="Información Personal" attrs="{'invisible':[('is_matriculado','!=',True)]}">
