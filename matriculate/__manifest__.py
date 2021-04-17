@@ -15,6 +15,7 @@
         'base_location',
         'l10n_latam_invoice_document',
         'l10n_ar',
+        'partner_firstname',
     ],
     'data': [
         'security/matriculate_security.xml',
