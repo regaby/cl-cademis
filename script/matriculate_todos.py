@@ -18,11 +18,11 @@ def search_create_or_write(model, args, dicc):
 CONFIG = configparser.ConfigParser()
 CONFIG.read('xmlrpc.conf')
 
-HOST = CONFIG['local']['HOST']
-PORT = int(CONFIG['local']['PORT'])
-USER = CONFIG['local']['USER']
-PASS = CONFIG['local']['PASS']
-DB = CONFIG['local']['DB']
+HOST = CONFIG['prod']['HOST']
+PORT = int(CONFIG['prod']['PORT'])
+USER = CONFIG['prod']['USER']
+PASS = CONFIG['prod']['PASS']
+DB = CONFIG['prod']['DB']
 
 INPUT_FILE = 'matriculate_todos.csv'
 
@@ -55,6 +55,7 @@ for line in CSV_FILE:
     if matricula == matricula_ant:
         continue
     matricula_ant = matricula
+    name = line[1]
     street = line[3]
     street_number = line[4]
     street_floor = line[5]
@@ -88,6 +89,9 @@ for line in CSV_FILE:
         'country_id': country,
         'state_id': state,
         'department_id': department_id,
+        'name': name,
+        'lastname': name.split(', ')[0],
+        'firstname': name.split(', ')[1],
 
     }
     sys.stdout.write("\rLoading Concept: #%s" % cont)
