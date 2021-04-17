@@ -29,6 +29,9 @@ class Partner(models.Model):
     job_street = fields.Char()
     job_city = fields.Many2one('res.city', string='Ciudad')
     job_phone = fields.Char(string="Teléfono Profesional")
+    street_number = fields.Char()
+    street_floor = fields.Char()
+    street_depto = fields.Char()
     state = fields.Selection(
         [('pendiente','Pendiente'),
          ('activo','Activo'),

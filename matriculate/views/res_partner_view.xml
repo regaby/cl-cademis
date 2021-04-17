@@ -68,6 +68,13 @@
                 <field name="city" position="after">
                     <field name="city_id" placeholder="Ciudad" on_change="_onchange_city_id" class="o_address_city"/>
                 </field>
+                <xpath expr="//field[@name='street']" position="after">
+                    <div class="oe_edit_only o_row">
+                        <field name="street_number" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" placeholder="Número"/>
+                        <field name="street_floor" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" placeholder="Piso"/>
+                        <field name="street_depto" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" placeholder="Depto."/>
+                    </div>
+                </xpath>
                 <field name="street" position="attributes">
                     <attribute name="placeholder">Residencia Particular (Calle)</attribute>
                 </field>
